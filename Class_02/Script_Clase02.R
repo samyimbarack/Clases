@@ -116,7 +116,6 @@ head(d1)
 #---- Part 2: Loops  -------------------
 
 A<-2
-
 if(A==1){
   print("A es un objeto con un elemento numérico 1")
 } else {
@@ -141,9 +140,9 @@ for(i in 1:5){
 }
 
 i<-1
-eps<-50/(i^2)
+eps<-10/(i^2)
 while(eps>0.001){
-  eps<-50/(i^2)
+  eps<-10/(i^2)
   print(paste("eps value es still..", eps))
   i<-i+1
 }
@@ -163,7 +162,7 @@ tapply(X = quakes$mag,INDEX = quakes$stations, FUN = mean)
 #https://rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf
 library(tidyverse)
 #Cómo se instala el paquete si no lo tengo? Tank!!! ayudaaaa!
-#install.packages("tydiverse")
+install.packages("tydiverse")
 
 quakes %>% 
   filter(mag>6) %>% 
@@ -177,7 +176,7 @@ quakes %>%
 ### 3. data.table (recommended in this course)
 library(data.table)
 #https://github.com/rstudio/cheatsheets/raw/master/datatable.pdf
-#install.packages("data.table")
+install.packages("data.table")
 quakes<-data.table(quakes)
 
 
