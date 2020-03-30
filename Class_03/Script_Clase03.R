@@ -9,13 +9,13 @@
 
 # Reading an exporting data
 library(readxl)
-#scdsc
+library(data.table)
 
 casos<-data.table(read_excel("Class_02/2020-03-17-Casos-confirmados.xlsx",na = "—",trim_ws = TRUE,col_names = TRUE),stringsAsFactors = FALSE)
 
 casos<-casos[Región=="Metropolitana",]
 
-saveRDS
+saveRDS(casos,"Class_03/casosRM.rds")
 
 write.csv(casos,file = 'Class_03/CasosCovid_RM.csv',fileEncoding = 'UTF-8')
 
