@@ -35,7 +35,7 @@ casosRM[Sexo=="Fememino",Sexo:="Femenino"]
 
 class(casosRM$Sexo)
 
-casosRM[,Sexo:=factor(Sexo,nmax = 2)]
+casosRM[,Sexo:=factor(Sexo)]
 
 head(casosRM$Sexo)
 head(as.numeric(casosRM$Sexo))
@@ -46,17 +46,18 @@ casosRM[,.N,by=.(Sexo,`Centro de salud`)]
 
 #Collapsing by Centro de Salud 
 
-casosRM[,sum(`Casos confirmados`,na.rm = T),by=.(`Centro de salud`)][,V1/sum(V1)]
+Obj1<-casosRM[,.N,by=.(`Centro de salud`)]
+Obj1[,sum(N)]
 
 # collapsing by average age
 
 A<-casosRM[,.(AvAge=mean(Edad,na.rm = T)),by=.(`Centro de salud`)]
 
-B<-casosRM[,.(Total_centro=sum(`Casos confirmados`,na.rm = T)),by=.(`Centro de salud`)]
+B<-casosRM[,.(Total_centro=sum(.N,na.rm = T)),by=.(`Centro de salud`)]
 
-C<-casosRM[Sexo=="Femenino",.(Total_Centro_Mujeres=sum(`Casos confirmados`,na.rm = T)),by=.(`Centro de salud`)]
+C<-casosRM[Sexo=="Femenino",.(Total_Centro_Mujeres=sum(.N,na.rm = T)),by=.(`Centro de salud`)]
 
-D<-casosRM[Sexo=="Masculino",.(Total_Centro_Hombres=sum(`Casos confirmados`,na.rm = T)),by=.(`Centro de salud`)]
+D<-casosRM[Sexo=="Masculino",.(Total_Centro_Hombres=.N),by=.(`Centro de salud`)]
 
 
 #merging data sets
@@ -69,7 +70,7 @@ ABCD[,porc_mujeres:=Total_Centro_Mujeres/Total_centro]
 
 # reshaping
 
-E<-casosRM[,.(AvAge=mean(Edad,na.rm = T),`Casos confirmados`=sum(`Casos confirmados`,na.rm = T)),by=.(`Centro de salud`,Sexo)]
+E<-casosRM[,.(AvAge=mean(Edad,na.rm = T),`Casos confirmados`=.N),by=.(`Centro de salud`,Sexo)]
 G<-reshape(E,direction = 'wide',timevar = 'Sexo',v.names = c('AvAge','Casos confirmados'),idvar = 'Centro de salud')
 
 #---- Part 2: Visualization  -------------------
